@@ -8,6 +8,6 @@ class Timeline extends StatefulWidget {
 class _TimelineState extends State<Timeline> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Center(child: Container(child: Text("Timeline"),));
   }
 }

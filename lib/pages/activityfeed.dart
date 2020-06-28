@@ -8,7 +8,7 @@ class ActivityFeed extends StatefulWidget {
 class _ActivityFeedState extends State<ActivityFeed> {
   @override
   Widget build(BuildContext context) {
-    return Text("Activity feed");
+    return Center(child: Container(child: Text("ActivityFeed"),));
   }
 }
 

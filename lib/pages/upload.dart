@@ -8,6 +8,6 @@ class Upload extends StatefulWidget {
 class _UploadState extends State<Upload> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Center(child: Container(child: Text("Uploads"),));
   }
 }
