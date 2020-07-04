@@ -15,27 +15,30 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
-  bool isAuth=false;
+  bool isAuth = false;
   PageController pageController;
-  int pageIndex=0;
+  int pageIndex = 0;
 
-  login(){
+  login() {
     googleSignIn.signIn();
   }
-  logout(){
+
+  logout() {
     googleSignIn.signOut();
   }
-  onPageChanged(int pageindex){
+
+  onPageChanged(int pageindex) {
     setState(() {
       this.pageIndex = pageindex;
     });
   }
-  onTap(int pageIndex){
-    pageController.jumpToPage(pageIndex);
+
+  onTap(int pageIndex) {
+    pageController.animateToPage(pageIndex,
+        duration: Duration(milliseconds: 250), curve: Curves.easeInOut);
   }
 
-  Widget buildUnAuthPage(){
+  Widget buildUnAuthPage() {
     return Scaffold(
       body: Center(
         child: Container(
@@ -44,23 +47,25 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                child: Text("Flutter Share",style: TextStyle(fontSize: 44),),
+                child: Text(
+                  "Flutter Share",
+                  style: TextStyle(fontFamily: "Kalam", fontSize: 55),
+                ),
               ),
               Material(
                 child: GestureDetector(
                   behavior: HitTestBehavior.translucent,
-                onTap: (){
-                  login();
-                },
+                  onTap: () {
+                    login();
+                  },
                   child: Container(
-                    margin: EdgeInsets.only(top:50.0),
+                    margin: EdgeInsets.only(top: 50.0),
                     height: 50,
                     width: 230,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage("Assets/google sign in.png"),
-                        fit: BoxFit.cover
-                      ),
+                          image: AssetImage("Assets/google sign in.png"),
+                          fit: BoxFit.cover),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.2),
@@ -80,7 +85,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget buildAuthPage(){
+  Widget buildAuthPage() {
     return Scaffold(
       body: PageView(
         children: <Widget>[
@@ -101,7 +106,11 @@ class _HomeState extends State<Home> {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.whatshot)),
           BottomNavigationBarItem(icon: Icon(Icons.search)),
-          BottomNavigationBarItem(icon: Icon(Icons.photo_camera)),
+          BottomNavigationBarItem(
+              icon: Icon(
+            Icons.photo_camera,
+            size: 34,
+          )),
           BottomNavigationBarItem(icon: Icon(Icons.notifications_active)),
           BottomNavigationBarItem(icon: Icon(Icons.account_circle)),
         ],
@@ -116,29 +125,27 @@ class _HomeState extends State<Home> {
     // when user signed in
     googleSignIn.onCurrentUserChanged.listen((account) {
       handlingAuthState(account);
-    },onError: (err){
+    }, onError: (err) {
       print(err);
     });
 
     // when app reopened
-    googleSignIn.signInSilently(suppressErrors: false)
-        .then((account){
-          handlingAuthState(account);
-        })
-        .catchError((err){
-          print(err);
-        });
+    googleSignIn.signInSilently(suppressErrors: false).then((account) {
+      handlingAuthState(account);
+    }).catchError((err) {
+      print(err);
+    });
   }
 
-  handlingAuthState (GoogleSignInAccount account){
-    if(account != null){
+  handlingAuthState(GoogleSignInAccount account) {
+    if (account != null) {
       print(account);
       setState(() {
         isAuth = true;
       });
-    }else{
+    } else {
       setState(() {
-        isAuth= false;
+        isAuth = false;
       });
     }
   }

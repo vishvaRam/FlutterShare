@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-circularProgress(){
-  return Text("circular");
+circularProgress() {
+  return Center(child: Container(child: CircularProgressIndicator()));
 }
 
-linearProgress(){
-  return Text("Linear");
+linearProgress() {
+  return Container(padding: EdgeInsets.only(bottom: 10.0),child: LinearProgressIndicator());
 }
